@@ -12,14 +12,15 @@ bodyClass: tag-template
 <header class="gh-hero">
   <div class="gh-hero-content">
     <h1>{{ tag }}</h1>
-    <p>A collection of posts tagged "{{ tag }}".</p>
+    {% set taggedPosts = collections.posts | postsWithTag(tag) %}
+    {% set taggedCount = taggedPosts | length %}
+    <p>A collection of {{ taggedCount }} {{ "post" if taggedCount == 1 else "posts" }}</p>
   </div>
 </header>
 
 <div class="gh-page">
   <div class="gh-container">
     <div class="gh-postfeed">
-      {% set taggedPosts = collections.posts | postsWithTag(tag) %}
       {% for post in taggedPosts %}
       <article class="gh-card {% if post.data.feature_image %}with-image{% else %}no-image{% endif %} post">
         <a class="gh-card-link" href="{{ post.url }}">
@@ -29,6 +30,8 @@ bodyClass: tag-template
           <div class="gh-card-content">
             <span class="gh-card-meta">
               <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate("d MMM yyyy") }}</time>
+              <span class="bull">&bull;</span>
+              {{ post.templateContent | readingTime }}
             </span>
             <h2 class="gh-card-title">{{ post.data.title }}</h2>
             <p>{{ post.data.description or (post.templateContent | excerpt(160)) }}</p>

@@ -43,11 +43,12 @@ isArticle: true
   </footer>
 </article>
 
-{{#if nextPost}}
 <aside class="gh-readmore">
   <div class="gh-container">
     <div class="gh-readmore-next">
+      {{#if nextPost}}
       <a href="{{nextPost.url}}">{{> icons/arrow-left}} <h4>{{nextPost.data.title}}</h4></a>
+      {{/if}}
     </div>
     <div class="gh-readmore-prev">
       {{#if prevPost}}
@@ -58,4 +59,3 @@ isArticle: true
     </div>
   </div>
 </aside>
-{{/if}}

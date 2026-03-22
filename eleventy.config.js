@@ -118,6 +118,7 @@ export default function(eleventyConfig) {
   eleventyConfig.addFilter("htmlDateString", htmlDateString);
   eleventyConfig.addFilter("year", year);
   eleventyConfig.addFilter("excerpt", excerpt);
+  eleventyConfig.addFilter("readingTime", readingTimeText);
   eleventyConfig.addFilter("slugify", slugify);
   eleventyConfig.addFilter("postsWithTag", postsWithTag);
   eleventyConfig.addFilter("postsWithAuthor", postsWithAuthor);

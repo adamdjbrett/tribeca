@@ -12,13 +12,15 @@ bodyClass: author-template
 <header class="gh-hero">
   <div class="gh-hero-content">
     <h1>{{ author }}</h1>
+    {% set authorPosts = collections.posts | postsWithAuthor(author) %}
+    {% set authorCount = authorPosts | length %}
+    <p>{{ authorCount }} {{ "post" if authorCount == 1 else "posts" }}</p>
   </div>
 </header>
 
 <div class="gh-page">
   <div class="gh-container">
     <div class="gh-postfeed">
-      {% set authorPosts = collections.posts | postsWithAuthor(author) %}
       {% for post in authorPosts %}
       <article class="gh-card {% if post.data.feature_image %}with-image{% else %}no-image{% endif %} post">
         <a class="gh-card-link" href="{{ post.url }}">
@@ -28,6 +30,8 @@ bodyClass: author-template
           <div class="gh-card-content">
             <span class="gh-card-meta">
               <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate("d MMM yyyy") }}</time>
+              <span class="bull">&bull;</span>
+              {{ post.templateContent | readingTime }}
             </span>
             <h2 class="gh-card-title">{{ post.data.title }}</h2>
             <p>{{ post.data.description or (post.templateContent | excerpt(160)) }}</p>
