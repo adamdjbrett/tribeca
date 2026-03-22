@@ -1,0 +1,41 @@
+---
+layout: layouts/default.hbs
+pagination:
+  data: collections.authorList
+  size: 1
+  alias: author
+permalink: "/authors/{{ author | slugify }}/index.html"
+eleventyComputed:
+  title: "{{ author }}"
+bodyClass: author-template
+---
+<header class="gh-hero">
+  <div class="gh-hero-content">
+    <h1>{{ author }}</h1>
+  </div>
+</header>
+
+<div class="gh-page">
+  <div class="gh-container">
+    <div class="gh-postfeed">
+      {% set authorPosts = collections.posts | postsWithAuthor(author) %}
+      {% for post in authorPosts %}
+      <article class="gh-card {% if post.data.feature_image %}with-image{% else %}no-image{% endif %} post">
+        <a class="gh-card-link" href="{{ post.url }}">
+          {% if post.data.feature_image %}
+          <img class="gh-card-image" src="{{ post.data.feature_image }}" alt="{{ post.data.feature_image_alt or post.data.title }}" />
+          {% endif %}
+          <div class="gh-card-content">
+            <span class="gh-card-meta">
+              <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate("d MMM yyyy") }}</time>
+            </span>
+            <h2 class="gh-card-title">{{ post.data.title }}</h2>
+            <p>{{ post.data.description or (post.templateContent | excerpt(160)) }}</p>
+            <strong>Read more</strong>
+          </div>
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+---
+layout: layouts/default.hbs
+title: Tags
+permalink: /tags/index.html
+bodyClass: tag-template
+---
+<div class="gh-page">
+  <div class="gh-container gh-canvas">
+    <h1>Tags</h1>
+    <ul>
+      {{#each collections.tagList}}
+        <li><a href="/tags/{{slugify this}}/">{{this}}</a></li>
+      {{/each}}
+    </ul>
+  </div>
+</div>

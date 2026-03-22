@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="{{site.locale}}">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="generator" content="{{ eleventy.generator }}" />
+  <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+
+  <title>{{#if title}}{{title}} | {{site.title}}{{else}}{{site.title}}{{/if}}</title>
+  <meta name="description" content="{{#if description}}{{description}}{{else}}{{site.description}}{{/if}}">
+  <link rel="canonical" href="{{site.url}}{{page.url}}">
+  <link rel="alternate" type="application/rss+xml" title="{{site.title}}" href="/feed/feed.xml">
+</head>
+<body class="{{#if bodyClass}}{{bodyClass}}{{/if}}">
+<div class="gh-viewport">
+
+<header id="gh-head" class="gh-head gh-head-brandnav gh-head-overlay">
+  <nav class="gh-head-inner">
+    <div class="gh-head-brand">
+      <a class="gh-head-logo" href="{{site.url}}">
+        {{#if site.logo}}
+          <img src="{{site.logo}}" alt="{{site.title}}" />
+        {{else}}
+          {{site.title}}
+        {{/if}}
+      </a>
+      <a class="gh-burger" role="button" aria-label="Menu toggle">
+        <div class="gh-burger-box">
+          <div class="gh-burger-inner"></div>
+        </div>
+      </a>
+    </div>
+
+    <div class="gh-head-menu">
+      {{#each site.navigation}}
+        <a href="{{this.url}}">{{this.label}}</a>
+      {{/each}}
+    </div>
+
+    <div class="gh-head-actions">
+      <div class="gh-head-actions-list">
+        {{#if site.facebook}}
+          <a href="https://facebook.com/{{site.facebook}}" title="Facebook" target="_blank" rel="noopener">{{> icons/facebook}}</a>
+        {{/if}}
+        {{#if site.twitter}}
+          <a href="https://twitter.com/{{site.twitter}}" title="Twitter" target="_blank" rel="noopener">{{> icons/twitter}}</a>
+        {{/if}}
+        <a href="/feed/feed.xml" title="RSS" target="_blank" rel="noopener">{{> icons/rss}}</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="gh-main">
+  {{{ content }}}
+</main>
+
+<footer class="gh-foot">
+  <div class="gh-container">
+    <div class="gh-foot-menu">
+      {{#each site.navigation}}
+        <a href="{{this.url}}">{{this.label}}</a>
+      {{/each}}
+    </div>
+    <div class="gh-foot-meta">
+      Published with <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a> · Powered by <a href="https://11ty.dev" target="_blank" rel="noopener">Eleventy</a>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function () {
+  $('.gh-burger').click(function () {
+    $('body').toggleClass('gh-head-open');
+  });
+});
+</script>
+
+{{#if isArticle}}
+<script src="/assets/built/jquery.fitvids.js"></script>
+<script>
+var images = document.querySelectorAll('.kg-gallery-image img');
+images.forEach(function (image) {
+  var container = image.closest('.kg-gallery-image');
+  if (!container) return;
+  var width = image.attributes.width ? image.attributes.width.value : null;
+  var height = image.attributes.height ? image.attributes.height.value : null;
+  if (!width || !height) return;
+  var ratio = width / height;
+  container.style.flex = ratio + ' 1 0%';
+});
+$(document).ready(function () {
+  var $postContent = $(".gh-content");
+  if ($postContent.fitVids) {
+    $postContent.fitVids();
+  }
+});
+</script>
+{{/if}}
+
+</body>
+</html>

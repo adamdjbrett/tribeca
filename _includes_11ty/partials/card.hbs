@@ -1,0 +1,21 @@
+<article class="gh-card {{#if data.feature_image}}with-image{{else}}no-image{{/if}} post">
+  <a class="gh-card-link" href="{{url}}">
+    {{#if data.feature_image}}
+      <img
+        class="gh-card-image"
+        src="{{data.feature_image}}"
+        alt="{{#if data.feature_image_alt}}{{data.feature_image_alt}}{{else}}{{data.title}}{{/if}}"
+      />
+    {{/if}}
+    <div class="gh-card-content">
+      <span class="gh-card-meta">
+        <time datetime="{{htmlDateString date}}">{{readableDate date "d MMM yyyy"}}</time>
+        <span class="bull">&bull;</span>
+        {{readingTime templateContent}}
+      </span>
+      <h2 class="gh-card-title">{{data.title}}</h2>
+      <p>{{#if data.description}}{{data.description}}{{else}}{{excerpt templateContent 160}}{{/if}}</p>
+      <strong>Read more</strong>
+    </div>
+  </a>
+</article>
