@@ -4,7 +4,7 @@ pagination:
   data: collections.authorList
   size: 1
   alias: author
-permalink: "/authors/{{ author | slugify }}/index.html"
+permalink: "/author/{{ author | slugify }}/index.html"
 eleventyComputed:
   title: "{{ author }}"
 bodyClass: author-template
@@ -14,32 +14,40 @@ bodyClass: author-template
     <h1>{{ author }}</h1>
     {% set authorPosts = collections.posts | postsWithAuthor(author) %}
     {% set authorCount = authorPosts | length %}
-    <p>{{ authorCount }} {{ "post" if authorCount == 1 else "posts" }}</p>
+    <p>A collection of {{ authorCount }} {{ "post" if authorCount == 1 else "posts" }}</p>
   </div>
 </header>
 
 <div class="gh-page">
   <div class="gh-container">
+
     <div class="gh-postfeed">
-      {% for post in authorPosts %}
-      <article class="gh-card {% if post.data.feature_image %}with-image{% else %}no-image{% endif %} post">
+    {% for post in authorPosts %}
+
+      <article class="gh-card post {% if post.data.feature_image %}with-image{% else %}no-image{% endif %}">
         <a class="gh-card-link" href="{{ post.url }}">
           {% if post.data.feature_image %}
-          <img class="gh-card-image" src="{{ post.data.feature_image }}" alt="{{ post.data.feature_image_alt or post.data.title }}" />
+            <img class="gh-card-image"
+              srcset="{{ post.data.feature_image }} 300w,
+                      {{ post.data.feature_image }} 600w,
+                      {{ post.data.feature_image }} 1000w,
+                      {{ post.data.feature_image }} 2000w"
+              sizes="(max-width: 1000px) 400px, 700px"
+              src="{{ post.data.feature_image }}"
+              alt="{{ post.data.feature_image_alt or post.data.title }}"
+            />
           {% endif %}
           <div class="gh-card-content">
-            <span class="gh-card-meta">
-              <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate("d MMM yyyy") }}</time>
-              <span class="bull">&bull;</span>
-              {{ post.templateContent | readingTime }}
-            </span>
+            <span class="gh-card-meta"><time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate("d MMM yyyy") }}</time> <span class="bull">&bull;</span> {{ post.templateContent | readingTime }}</span>
             <h2 class="gh-card-title">{{ post.data.title }}</h2>
-            <p>{{ post.data.description or (post.templateContent | excerpt(160)) }}</p>
+            <p>{{ post.data.description or (post.templateContent | excerpt(140)) }}</p>
             <strong>Read more</strong>
           </div>
         </a>
       </article>
-      {% endfor %}
+
+    {% endfor %}
     </div>
+
   </div>
 </div>

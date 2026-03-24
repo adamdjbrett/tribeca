@@ -1,81 +1,91 @@
 <!DOCTYPE html>
 <html lang="{{site.locale}}">
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="HandheldFriendly" content="True" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
 
-  <title>{{#if title}}{{title}} | {{site.title}}{{else}}{{site.title}}{{/if}}</title>
-  <meta name="description" content="{{#if description}}{{description}}{{else}}{{site.description}}{{/if}}">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/assets/built/screen.css" />
+
+    <title>{{#if title}}{{title}} | {{site.title}}{{else}}{{site.title}}{{/if}}</title>
+    <meta name="description" content="{{#if description}}{{description}}{{else}}{{site.description}}{{/if}}">
+
 </head>
 <body class="{{#if bodyClass}}{{bodyClass}}{{/if}}">
 <div class="gh-viewport">
 
 <header id="gh-head" class="gh-head gh-head-brandnav gh-head-overlay">
-  <nav class="gh-head-inner">
-    <div class="gh-head-brand">
-      <a class="gh-head-logo" href="{{site.url}}">
-        {{#if site.logo}}
-          <img src="{{site.logo}}" alt="{{site.title}}" />
-        {{else}}
-          {{site.title}}
-        {{/if}}
-      </a>
-      <a class="gh-burger" role="button">
-        <div class="gh-burger-box">
-          <div class="gh-burger-inner"></div>
+    <nav class="gh-head-inner">
+
+        <div class="gh-head-brand">
+            <a class="gh-head-logo" href="{{site.url}}">
+                {{#if site.logo}}
+                    <img src="{{site.logo}}" alt="{{site.title}}" />
+                {{else}}
+                    {{site.title}}
+                {{/if}}
+            </a>
+            <a class="gh-burger" role="button">
+                <div class="gh-burger-box">
+                    <div class="gh-burger-inner"></div>
+                </div>
+            </a>
         </div>
-      </a>
-    </div>
-
-    <div class="gh-head-menu">
-      {{#each site.navigation}}
-        <a href="{{this.url}}">{{this.label}}</a>
-      {{/each}}
-    </div>
-
-    <div class="gh-head-actions">
-      <div class="gh-head-actions-list">
-        {{#if site.facebook}}
-          <a href="https://facebook.com/{{site.facebook}}" title="Facebook" target="_blank" rel="noopener">{{> icons/facebook}}</a>
-        {{/if}}
-        {{#if site.twitter}}
-          <a href="https://twitter.com/{{site.twitter}}" title="Twitter" target="_blank" rel="noopener">{{> icons/twitter}}</a>
-        {{/if}}
-        <a href="https://feedly.com/i/subscription/feed/{{site.url}}/rss/" title="RSS" target="_blank" rel="noopener">{{> icons/rss}}</a>
-      </div>
-    </div>
-  </nav>
+        <div class="gh-head-menu">
+            {{#each site.navigation}}
+                <a href="{{this.url}}">{{this.label}}</a>
+            {{/each}}
+        </div>
+        <div class="gh-head-actions">
+            <div class="gh-head-actions-list">
+                {{#if site.facebook}}
+                <a href="https://facebook.com/{{site.facebook}}" title="Facebook" target="_blank" rel="noopener">{{> icons/facebook}}</a>
+                {{/if}}
+                {{#if site.twitter}}
+                <a href="https://twitter.com/{{site.twitter}}" title="Twitter" target="_blank" rel="noopener">{{> icons/twitter}}</a>
+                {{/if}}
+                <a href="https://feedly.com/i/subscription/feed/{{site.url}}/rss/" title="RSS" target="_blank" rel="noopener">{{> icons/rss}}</a>
+            </div>
+        </div>
+    </nav>
 </header>
 
 <main class="gh-main">
-  {{{ content }}}
+
+    {{{ content }}}
+
 </main>
 
 <footer class="gh-foot">
-  <div class="gh-container">
-    <div class="gh-foot-menu">
-      {{#each site.navigation}}
-        <a href="{{this.url}}">{{this.label}}</a>
-      {{/each}}
+    <div class="gh-container">
+        <div class="gh-foot-menu">
+            {{#each site.navigation}}
+                <a href="{{this.url}}">{{this.label}}</a>
+            {{/each}}
+        </div>
+        <div class="gh-foot-meta">
+            Published with <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+        </div>
     </div>
-    <div class="gh-foot-meta">
-      Published with <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
-    </div>
-  </div>
 </footer>
 
 </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
+{{#if (hasPagination pagination)}}
+<script>
+    var maxPages = parseInt('{{paginationPageCount pagination}}');
+</script>
+<script src="/assets/built/infinitescroll.js"></script>
+{{/if}}
+
 <script>
 $(document).ready(function () {
-  $('.gh-burger').click(function () {
-    $('body').toggleClass('gh-head-open');
-  });
+    $('.gh-burger').click(function () {
+        $('body').toggleClass('gh-head-open');
+    });
 });
 </script>
 
@@ -84,15 +94,15 @@ $(document).ready(function () {
 <script>
 var images = document.querySelectorAll('.kg-gallery-image img');
 images.forEach(function (image) {
-  var container = image.closest('.kg-gallery-image');
-  var width = image.attributes.width.value;
-  var height = image.attributes.height.value;
-  var ratio = width / height;
-  container.style.flex = ratio + ' 1 0%';
+    var container = image.closest('.kg-gallery-image');
+    var width = image.attributes.width.value;
+    var height = image.attributes.height.value;
+    var ratio = width / height;
+    container.style.flex = ratio + ' 1 0%';
 });
 $(document).ready(function () {
-  var $postContent = $(".gh-content");
-  $postContent.fitVids();
+    var $postContent = $(".gh-content");
+    $postContent.fitVids();
 });
 </script>
 {{/if}}

@@ -54,6 +54,15 @@ function readingTimeText(value) {
   return `${minutes} min read`;
 }
 
+function paginationPageCount(pagination) {
+  if (!pagination || !Array.isArray(pagination.hrefs)) return 0;
+  return pagination.hrefs.length;
+}
+
+function hasPagination(pagination) {
+  return paginationPageCount(pagination) > 1;
+}
+
 export default function(eleventyConfig) {
   eleventyConfig.addPlugin(pluginRss);
   eleventyConfig.addPlugin(pluginSyntaxHighlight);
@@ -83,6 +92,12 @@ export default function(eleventyConfig) {
     return DateTime.fromJSDate(date, { zone: "utc" }).toFormat("yyyy-LL-dd");
   };
 
+  const atomDate = (value) => {
+    const date = toDate(value);
+    if (!date) return "";
+    return DateTime.fromJSDate(date, { zone: "utc" }).toISO();
+  };
+
   const year = (value) => {
     const date = toDate(value);
     if (!date) return "";
@@ -107,21 +122,27 @@ export default function(eleventyConfig) {
 
   Handlebars.registerHelper("readableDate", readableDate);
   Handlebars.registerHelper("htmlDateString", htmlDateString);
+  Handlebars.registerHelper("atomDate", atomDate);
   Handlebars.registerHelper("year", year);
   Handlebars.registerHelper("excerpt", excerpt);
   Handlebars.registerHelper("slugify", slugify);
   Handlebars.registerHelper("readingTime", readingTimeText);
   Handlebars.registerHelper("postsWithTag", postsWithTag);
   Handlebars.registerHelper("postsWithAuthor", postsWithAuthor);
+  Handlebars.registerHelper("paginationPageCount", paginationPageCount);
+  Handlebars.registerHelper("hasPagination", hasPagination);
 
   eleventyConfig.addFilter("readableDate", readableDate);
   eleventyConfig.addFilter("htmlDateString", htmlDateString);
+  eleventyConfig.addFilter("atomDate", atomDate);
   eleventyConfig.addFilter("year", year);
   eleventyConfig.addFilter("excerpt", excerpt);
   eleventyConfig.addFilter("readingTime", readingTimeText);
   eleventyConfig.addFilter("slugify", slugify);
   eleventyConfig.addFilter("postsWithTag", postsWithTag);
   eleventyConfig.addFilter("postsWithAuthor", postsWithAuthor);
+  eleventyConfig.addFilter("paginationPageCount", paginationPageCount);
+  eleventyConfig.addFilter("hasPagination", hasPagination);
 
   const getPostItems = (collectionApi) =>
     collectionApi

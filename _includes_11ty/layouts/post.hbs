@@ -2,60 +2,47 @@
 layout: layouts/default.hbs
 isArticle: true
 ---
-<article class="gh-article">
-  <header class="gh-header gh-canvas">
-    <span class="gh-post-meta">
-      <time datetime="{{htmlDateString date}}">{{readableDate date "d MMM yyyy"}}</time>
-      <span class="bull">&bull;</span>
-      {{readingTime content}}
-    </span>
-    <h1 class="gh-title">{{title}}</h1>
+<article class="gh-article post">
 
-    {{#if description}}
-      <p class="gh-excerpt">{{description}}</p>
-    {{/if}}
+    <header class="gh-header gh-canvas">
+        <span class="gh-post-meta"><time datetime="{{htmlDateString date}}">{{readableDate date "d MMM yyyy"}}</time> <span class="bull">&bull;</span> {{readingTime content}}</span>
+        <h1 class="gh-title">{{title}}</h1>
 
-    {{#if feature_image}}
-      <figure class="gh-feature-image">
-        <img src="{{feature_image}}" alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}" />
-        {{#if feature_image_caption}}
-          <figcaption>{{feature_image_caption}}</figcaption>
+        {{#if description}}
+        <p class="gh-excerpt">{{description}}</p>
         {{/if}}
-      </figure>
-    {{/if}}
-  </header>
 
-  <div class="gh-content gh-canvas">
-    {{{ content }}}
-  </div>
+        {{#if feature_image}}
+            <figure class="gh-feature-image">
+                <img src="{{feature_image}}" alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}" />
+                {{#if feature_image_caption}}
+                    <figcaption>{{feature_image_caption}}</figcaption>
+                {{/if}}
+            </figure>
+        {{/if}}
+    </header>
 
-  <footer class="gh-footer gh-canvas">
-    <div class="gh-post-authors">
-      Written by
-      {{#if authors}}
-        {{#each authors}}
-          <a href="{{#if this.url}}{{this.url}}{{else}}#{{/if}}">{{#if this.name}}{{this.name}}{{else}}{{this}}{{/if}}</a>
-        {{/each}}
-      {{else}}
-        <a href="#">{{site.author}}</a>
-      {{/if}}
+    <div class="gh-content gh-canvas">
+        {{{ content }}}
     </div>
-  </footer>
+
+    <footer class="gh-footer gh-canvas">
+        <div class="gh-post-authors">
+            Written by {{#if authors}}{{#each authors}}<a href="{{#if this.url}}{{this.url}}{{else}}/author/{{slugify this}}/{{/if}}">{{#if this.name}}{{this.name}}{{else}}{{this}}{{/if}}</a>{{/each}}{{else}}<a href="/author/{{slugify site.author}}/">{{site.author}}</a>{{/if}}
+        </div>
+    </footer>
+
 </article>
 
 <aside class="gh-readmore">
-  <div class="gh-container">
-    <div class="gh-readmore-next">
-      {{#if nextPost}}
-      <a href="{{nextPost.url}}">{{> icons/arrow-left}} <h4>{{nextPost.data.title}}</h4></a>
-      {{/if}}
+    <div class="gh-container">
+        <div class="gh-readmore-next">
+            {{#if nextPost}}<a href="{{nextPost.url}}">{{> icons/arrow-left}} <h4>{{nextPost.data.title}}</h4></a>{{/if}}
+        </div>
+        <div class="gh-readmore-prev">
+            {{#if prevPost}}<a href="{{prevPost.url}}">
+                <h4>{{prevPost.data.title}}</h4> {{> icons/arrow-right}}
+            </a>{{/if}}
+        </div>
     </div>
-    <div class="gh-readmore-prev">
-      {{#if prevPost}}
-      <a href="{{prevPost.url}}">
-        <h4>{{prevPost.data.title}}</h4> {{> icons/arrow-right}}
-      </a>
-      {{/if}}
-    </div>
-  </div>
 </aside>

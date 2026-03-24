@@ -9,7 +9,7 @@ bodyClass: author-template
     <h1>Authors</h1>
     <ul>
       {{#each collections.authorList}}
-        <li><a href="/authors/{{slugify this}}/">{{this}}</a></li>
+        <li><a href="/author/{{slugify this}}/">{{this}}</a></li>
       {{/each}}
     </ul>
   </div>

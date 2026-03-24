@@ -1,22 +1,23 @@
-# Tribeca (Eleventy Port)
+# Tribeca (Eleventy 3.1.5 Port)
 
-Eleventy `3.1.5` port of the original TryGhost Tribeca theme.
+Faithful Eleventy `3.1.5` + Luxon conversion of the original Ghost Tribeca theme.
 
 ## Credit
 
-- Original theme: `TryGhost/Tribeca`
-- This repository is an Eleventy/Handlebars port.
+- Original repository: `https://github.com/TryGhost/Tribeca`
+- Upstream project: `TryGhost/Tribeca`
+- This repository is an Eleventy/Handlebars port that preserves upstream HTML/CSS structure where Ghost runtime helpers are not required.
 
 ## Stack
 
 - Eleventy `3.1.5`
 - Handlebars templates
-- Luxon date filters
+- Luxon date filters (UTC-normalized output)
 
 ## Commands
 
 ```bash
-npm install
+npm ci
 npm run start
 npm run build
 ```
@@ -25,8 +26,8 @@ npm run build
 
 - `/`
 - `/posts/:slug/`
-- `/tags/` and `/tags/:tag/`
-- `/authors/` and `/authors/:author/`
+- `/tag/:tag/` (plus `/tags/` index)
+- `/author/:author/` (plus `/authors/` index)
 - `/feed/feed.xml`
 - `/sitemap.xml`
 - `/robots.txt`
@@ -35,4 +36,4 @@ npm run build
 
 ## License
 
-See [LICENSE](LICENSE).
+License remains MIT, matching upstream Tribeca. See [LICENSE](LICENSE).

@@ -9,7 +9,7 @@ bodyClass: tag-template
     <h1>Tags</h1>
     <ul>
       {{#each collections.tagList}}
-        <li><a href="/tags/{{slugify this}}/">{{this}}</a></li>
+        <li><a href="/tag/{{slugify this}}/">{{this}}</a></li>
       {{/each}}
     </ul>
   </div>

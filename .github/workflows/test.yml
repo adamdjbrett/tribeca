@@ -14,11 +14,10 @@ jobs:
         node: [ '22' ]
     name: Node ${{ matrix.node }}
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-      - run: yarn
-      - run: gulp build
-      - run: gulp zip
-      - run: yarn test:ci
+          cache: npm
+      - run: npm ci
+      - run: npm run build
